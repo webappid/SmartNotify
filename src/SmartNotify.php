@@ -25,7 +25,8 @@ class SmartNotify
                 [
                     'form_params' => [
                         'token' => env('NOTIFY_TOKEN'),
-                        'messages' => $message
+                        'messages' => $message,
+                        'category' => 'SYSTEM_ERROR'
                     ]
                 ]
             );
