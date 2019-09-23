@@ -16,7 +16,18 @@ use GuzzleHttp\Client;
  */
 class SmartNotify
 {
-    public static function push(string $message, string $category = 'SYSTEM_ERROR')
+
+    public const SYSTEM_ERROR = 'SYSTEM_ERROR';
+
+    public const WARNING = 'WARNING';
+
+    public const PAYMENT_REPORT = 'PAYMENT_REPORT';
+
+    public const PAYMENT_NOTIFY = 'PAYMENT_NOTIFY';
+
+    public const BOOKING_NOTIFY = 'BOOKING_NOTIFY';
+
+    public static function push(string $message, string $category = self::SYSTEM_ERROR)
     {
         $url = 'https://push.webappid.com/api/notify';
         $client = new Client(['cookies' => true, 'Referer' => $url, 'User-Agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36']);
