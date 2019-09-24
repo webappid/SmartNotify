@@ -24,7 +24,10 @@ class SmartNotify
 
     public const PAYMENT_REPORT = 'PUSH';
 
-    public static function push(string $message, string $category = self::SYSTEM_ERROR)
+    public static function push(string $message,
+                                string $category = self::SYSTEM_ERROR,
+                                string $tokenAccount = '',
+                                string $title = '')
     {
         $url = 'https://push.webappid.com/api/notify';
         $client = new Client(['cookies' => true, 'Referer' => $url, 'User-Agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36']);
@@ -33,6 +36,8 @@ class SmartNotify
                 [
                     'form_params' => [
                         'token' => env('NOTIFY_TOKEN'),
+                        'token_account' => $tokenAccount,
+                        'title' => $title,
                         'messages' => $message,
                         'category' => $category
                     ]
