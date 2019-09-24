@@ -8,6 +8,7 @@
 
 namespace WebAppId\SmartNotify;
 
+use Exception;
 use GuzzleHttp\Client;
 
 /**
@@ -21,11 +22,7 @@ class SmartNotify
 
     public const WARNING = 'WARNING';
 
-    public const PAYMENT_REPORT = 'PAYMENT_REPORT';
-
-    public const PAYMENT_NOTIFY = 'PAYMENT_NOTIFY';
-
-    public const BOOKING_NOTIFY = 'BOOKING_NOTIFY';
+    public const PAYMENT_REPORT = 'PUSH';
 
     public static function push(string $message, string $category = self::SYSTEM_ERROR)
     {
@@ -41,7 +38,7 @@ class SmartNotify
                     ]
                 ]
             );
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             //nothing to report
         }
     }
