@@ -22,7 +22,7 @@ class SmartNotify
 
     public const WARNING = 'WARNING';
 
-    public const PAYMENT_REPORT = 'PUSH';
+    public const PUSH = 'PUSH';
 
     public static function push(string $message,
                                 string $category = self::SYSTEM_ERROR,
