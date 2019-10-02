@@ -22,7 +22,7 @@ class SmartNotify
 
     public const WARNING = 'WARNING';
 
-    public const PAYMENT_REPORT = 'PUSH';
+    public const PUSH = 'PUSH';
 
     private const ENDPOINT = 'https://push.webappid.com/api/';
 
