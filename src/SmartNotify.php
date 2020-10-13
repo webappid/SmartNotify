@@ -44,13 +44,13 @@ class SmartNotify
                                 string $tokenAccount = '',
                                 string $title = '')
     {
-        if (env('NOTIFY_TOKEN') != null) {
+        if (config('sn.token') != null) {
             $url = self::ENDPOINT . 'notify';
             try {
                 self::getClient($url)->post($url,
                     [
                         'form_params' => [
-                            'token' => env('NOTIFY_TOKEN'),
+                            'token' => config('sn.token'),
                             'token_account' => $tokenAccount,
                             'title' => $title,
                             'messages' => $message,
@@ -90,5 +90,6 @@ class SmartNotify
                 return null;
             }
         }
+        return null;
     }
 }
