@@ -26,17 +26,24 @@ class SmartNotify
 
     private const ENDPOINT = 'https://push.webappid.com/api/';
 
-    private static function getClient(string $url)
+    public static function error(string $message,
+                                 string $category = self::SYSTEM_ERROR,
+                                 string $tokenAccount = '',
+                                 string $title = '')
     {
-        return new Client(
-            ['headers' =>
-                [
-                    'cookies' => true,
-                    'Referer' => $url,
-                    'Accept' => 'application/json',
-                    'User-Agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36'
-                ]
-            ]);
+        $report['url'] = request()->url();
+        $report['queryString'] = request()->getQueryString();
+        $report['method'] = request()->getMethod();
+        $report['session'] = request()->getSession()->all();
+        $report['route_param'] = request()->route()->parameters();
+        $report['user'] = request()->user()->toArray();
+        $message = json_encode($report, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . '
+
+=====================================================================================================================================
+
+        ' . $message;
+
+        self::push($message, $category, $tokenAccount, $title);
     }
 
     public static function push(string $message,
@@ -44,6 +51,8 @@ class SmartNotify
                                 string $tokenAccount = '',
                                 string $title = '')
     {
+
+
         if (config('sn.token') != null) {
             $url = self::ENDPOINT . 'notify';
             try {
@@ -62,6 +71,19 @@ class SmartNotify
                 //nothing to report
             }
         }
+    }
+
+    private static function getClient(string $url)
+    {
+        return new Client(
+            ['headers' =>
+                [
+                    'cookies' => true,
+                    'Referer' => $url,
+                    'Accept' => 'application/json',
+                    'User-Agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36'
+                ]
+            ]);
     }
 
     public static function register(string $registerCode, string $chatId): ?string
