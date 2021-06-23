@@ -35,9 +35,9 @@ class SmartNotify
         $report['url'] = request()->url();
         $report['queryString'] = request()->getQueryString();
         $report['method'] = request()->getMethod();
-        $report['session'] = request()->getSession()->all();
+        $report['session'] = request()->getSession()?->all();
         $report['route_param'] = request()->route()->parameters();
-        $report['user'] = request()->user()->toArray();
+        $report['user'] = request()->user()?->toArray();
         $report['headers'] = request()->headers->all();
         $message = json_encode($report, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . '
 
@@ -54,7 +54,6 @@ class SmartNotify
                                 string $title = '')
     {
 
-
         if (config('sn.token') != null) {
             $url = self::ENDPOINT . 'notify';
             try {
@@ -70,6 +69,7 @@ class SmartNotify
                     ]
                 );
             } catch (Exception $exception) {
+                dd($exception);
                 //nothing to report
             }
         }
