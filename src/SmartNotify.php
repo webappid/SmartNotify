@@ -36,7 +36,7 @@ class SmartNotify
         $report['queryString'] = request()->getQueryString();
         $report['method'] = request()->getMethod();
         $report['session'] = request()->getSession()?->all();
-        $report['route_param'] = request()->route()->parameters();
+        $report['route_param'] = request()->route()?->parameters();
         $report['user'] = request()->user()?->toArray();
         $report['headers'] = request()->headers->all();
         $message = json_encode($report, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . '
